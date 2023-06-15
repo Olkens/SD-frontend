@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "target": "ES5",
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "es2015", "ES7"],
     "module": "ESNext",
     "skipLibCheck": true,
+
 
     /* Bundler mode */
     "moduleResolution": "node",
@@ -20,6 +21,10 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "typeRoots" : [
+    "./node_modules/@types",
+    "./src/types"
+  ]
 }

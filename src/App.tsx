@@ -1,30 +1,34 @@
 import { useEffect, useState} from 'react'
 import './App.css'
+import CategoryCreateForm from './components/CategoryCreateForm'
 
 function App() {
-    const [posts, setPosts] = useState([])
+    const [products, setProducts] = useState([])
 
-    const fetchPostsData = () => {
-        fetch("http://localhost:3000/post")
+    const fetchProductData = () => {
+        fetch("http://localhost:8080/")
             .then(response => {
                 return response.json()
             })
             .then(data => {
-                setPosts(data)
+                console.log(data)
+                setProducts(data)
             })
     }
 
     useEffect(() => {
-        fetchPostsData()
+        fetchProductData()
     }, [])
 
     return (
         <>
             <div>
-                {posts.length > 0 && (
+                <CategoryCreateForm></CategoryCreateForm>
+                co jes
+                {products.length > 0 && (
                     <ul>
-                        {posts.map(post => (
-                            <li key={post.id}>{post.title}</li>
+                        {products.map(product => (
+                            <li key={product.id}>{product.name}<p>{product.tags.map(tag => (<span>{tag.name} - {tag.color}</span>))}</p></li>
                         ))}
                     </ul>
                 )}
