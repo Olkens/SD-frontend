@@ -1,24 +1,30 @@
-import { useEffect, useState} from 'react'
+import { useEffect, useState, React } from 'react'
 import './App.css'
 import CategoryCreateForm from './components/CategoryCreateForm'
+import { getAllCategories, baseCategoryClient } from './api/CategoryApiService.js'
+import axios from 'axios'
+import { useStore } from './stores/categoryStore/store.js'
+
 
 function App() {
     const [products, setProducts] = useState([])
 
-    const fetchProductData = () => {
-        fetch("http://localhost:8080/")
-            .then(response => {
-                return response.json()
-            })
-            .then(data => {
-                console.log(data)
-                setProducts(data)
-            })
-    }
+    // const fetchProductData = () => {
+    //     baseCategoryClient.get('category').then(response => {
+    //             setProducts(response.data)
+    //         })
+    // }
 
     useEffect(() => {
-        fetchProductData()
+        baseCategoryClient.get('category').then(response => {
+            setProducts(response.data)
+        })
     }, [])
+
+    const categories = useStore((state) => state.categories)
+    console.log(categories)
+
+
 
     return (
         <>
@@ -28,10 +34,14 @@ function App() {
                 {products.length > 0 && (
                     <ul>
                         {products.map(product => (
-                            <li key={product.id}>{product.name}<p>{product.tags.map(tag => (<span>{tag.name} - {tag.color}</span>))}</p></li>
+                            <li key={product.id}>{product.name}<p>{product.color}</p></li>
                         ))}
                     </ul>
                 )}
+                {categories.length > 0 &&  categories.map(c => (
+                    <li key={c.name}>{c.name}</li>
+                ))}
+
             </div>
         </>
     )

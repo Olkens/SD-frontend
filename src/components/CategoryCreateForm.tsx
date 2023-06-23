@@ -1,45 +1,31 @@
-import {useState} from 'react'
+import { useState } from 'react'
+import { addCategory } from '../api/CategoryApiService.js'
 
 export default function CategoryCreateForm() {
-    const [name, setName] = useState("")
-    const [color, setColor] = useState("")
+    const [category, setCategory] = useState({ name: '', color: '' })
+    // const [name, setName] = useState("")
+    // const [color, setColor] = useState("")
 
     const handleNameChange = (e) => {
-        setName(e.target.value)
+        setCategory({ ...category, name: e.target.value })
     }
 
     const handleColorChange = (e) => {
-        setColor(e.target.value)
+        setCategory({ ...category, color: e.target.value })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const newCategory = {
-            name: name,
-            color: color
-        }
+        addCategory(category.name, category.color)
+    }
 
-        fetch("http://localhost:8080/category/add", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newCategory),
-          }).then((response) => {
-              if (response.status !== 200) {
-                throw new Error('kupa');
-              }
-              return response.json();
-            })
-        }
-    return(
+    return (
         <>
             <form>
                 <label>Name:</label>
-                <input type="text" value={name} onChange={handleNameChange}></input>
+                <input type="text" value={category.name} onChange={handleNameChange}></input>
                 <label>Color:</label>
-                <input type="text" value={color} onChange={handleColorChange}></input>
+                <input type="text" value={category.color} onChange={handleColorChange}></input>
                 <button onClick={handleSubmit}></button>
             </form>
         </>
