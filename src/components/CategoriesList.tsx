@@ -9,22 +9,19 @@ export default function CategoriesList() {
         getCategories
     )
 
-    if (status === 'loading') {
-        return <p>wait</p>
-    }
-
-    if (status === 'error') {
-        return <p>{error.message}</p>
-    }
-
     return (
         <>
-        <CategoryCreateForm></CategoryCreateForm>
-            <ul>
-                {data.map(c => {
-                    return <li>{c.name}</li>
-                })}
-            </ul>
+            <CategoryCreateForm></CategoryCreateForm>
+            {status === 'loading' ? (
+                <p>wait</p>
+            ) : status === 'error' ? (
+                <p> Nie udalo się połączyć z serwerem </p>
+            ) :
+                <ul>
+                    {data.map(c => {
+                        return <li>{c.name}</li>
+                    })}
+                </ul>}
         </>
     )
 }
