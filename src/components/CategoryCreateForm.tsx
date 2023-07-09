@@ -1,33 +1,46 @@
 import { useState } from 'react'
-import { addCategory } from '../api/CategoryApiService.js'
+import { addNewCategory, baseCategoryClient } from '../api/CategoryApiService.js'
+import { useMutation, useQueryClient } from 'react-query'
 
 export default function CategoryCreateForm() {
-    const [category, setCategory] = useState({ name: '', color: '' })
-    // const [name, setName] = useState("")
-    // const [color, setColor] = useState("")
+  const client = useQueryClient()
 
-    const handleNameChange = (e) => {
-        setCategory({ ...category, name: e.target.value })
+  const [category, setCategory] = useState({ name: '', color: '' })
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCategory({ ...category, name: e.target.value })
+  }
+
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCategory({ ...category, color: e.target.value })
+  }
+
+  const addNewCategory = useMutation((newCategory) => {
+    console.log('Adding new category: ', newCategory)
+    return baseCategoryClient.post('/category/add', newCategory)
+  }, {
+    onSuccess: () => {
+      client.invalidateQueries(["categories"])
+      client.refetchQueries(["categories"], { force: true })
     }
+  }
+  )
 
-    const handleColorChange = (e) => {
-        setCategory({ ...category, color: e.target.value })
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    addNewCategory.mutate(category);
+    setCategory({ ...category, name: "", color: "" })
+  }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        addCategory(category.name, category.color)
-    }
-
-    return (
-        <>
-            <form>
-                <label>Name:</label>
-                <input type="text" value={category.name} onChange={handleNameChange}></input>
-                <label>Color:</label>
-                <input type="text" value={category.color} onChange={handleColorChange}></input>
-                <button onClick={handleSubmit}></button>
-            </form>
-        </>
-    )
+  return (
+    <>
+      <form>
+        <label>Name:</label>
+        <input type="text" value={category.name} onChange={handleNameChange}></input>
+        <label>Color:</label>
+        <input type="text" value={category.color} onChange={handleColorChange}></input>
+        <button className="btn w-64 rounded-full" onClick={() => handleSubmit(event)}>Button</button>
+      </form>
+    </>
+  )
 }

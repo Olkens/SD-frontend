@@ -1,51 +1,38 @@
-import { useEffect, useState, React } from 'react'
-import './App.css'
-import CategoryCreateForm from './components/CategoryCreateForm'
-import { getAllCategories, baseCategoryClient } from './api/CategoryApiService.js'
-import axios from 'axios'
-import { useStore } from './stores/categoryStore/store.js'
+import './index.css'
+import HomeLayout from './Layouts/HomeLayout'
+import { Routes, Route } from 'react-router-dom';
+import CategoriesList from './components/CategoriesList'
+import Sidebar from './components/Sidebar'
+import Container from '@mui/material/Container';
+import ProductsList from './components/ProductsList';
+
+
+
 
 
 function App() {
-    const [products, setProducts] = useState([])
-
-    // const fetchProductData = () => {
-    //     baseCategoryClient.get('category').then(response => {
-    //             setProducts(response.data)
-    //         })
-    // }
-
-    useEffect(() => {
-        baseCategoryClient.get('category').then(response => {
-            setProducts(response.data)
-        })
-    }, [])
-
-    const categories = useStore((state) => state.categories)
-    console.log(categories)
-
-
-
     return (
         <>
-            <div>
-                <CategoryCreateForm></CategoryCreateForm>
-                co jes
-                {products.length > 0 && (
-                    <ul>
-                        {products.map(product => (
-                            <li key={product.id}>{product.name}<p>{product.color}</p></li>
-                        ))}
-                    </ul>
-                )}
-                {categories.length > 0 &&  categories.map(c => (
-                    <li key={c.name}>{c.name}</li>
-                ))}
-
-            </div>
+            <Container
+                maxWidth={false}
+                disableGutters
+                sx={{
+                    display: 'flex',
+                    margin: 0,
+                    padding: 0,
+                    height: '100vh',
+                }} >
+                <Sidebar></Sidebar>
+                <Container maxWidth={false} sx={{ background: 'white', }}>
+                    <Routes>
+                        <Route path='/' element={<HomeLayout />} />
+                        <Route path='/categories' element={<CategoriesList />} />
+                        <Route path='/products' element={<ProductsList></ProductsList>} />
+                    </Routes>
+                </Container>
+            </Container>
         </>
     )
-
 }
 
 export default App
