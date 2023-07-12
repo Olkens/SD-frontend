@@ -5,10 +5,7 @@ import CategoriesList from './components/CategoriesList'
 import Sidebar from './components/Sidebar'
 import Container from '@mui/material/Container';
 import ProductsList from './components/ProductsList';
-
-
-
-
+import AdminDashboardLayout from './Layouts/AdminDashboardLayout'
 
 function App() {
     return (
@@ -27,7 +24,8 @@ function App() {
                     <Routes>
                         <Route path='/' element={<HomeLayout />} />
                         <Route path='/categories' element={<CategoriesList />} />
-                        <Route path='/products' element={<ProductsList></ProductsList>} />
+                        <Route path='/products' element={<ProductsList />} />
+                        <Route path='/admin-dashboard' element={<AdminDashboardLayout />} />
                     </Routes>
                 </Container>
             </Container>

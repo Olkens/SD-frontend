@@ -39,11 +39,11 @@ export default function NestedList() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton href="/categories" sx={{ pl: 4 }}>
             <ListItemIcon>
               <StarBorder />
             </ListItemIcon>
-            <Link underline="none" href="/categories">Art</Link>
+            Art
           </ListItemButton>
         </List>
       </Collapse>
