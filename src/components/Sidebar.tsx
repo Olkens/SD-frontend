@@ -24,11 +24,11 @@ export default function NestedList() {
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton>
+      <ListItemButton href="/products">
         <ListItemIcon>
           <SendIcon />
         </ListItemIcon>
-        <Link underline="none" href="/products">products</Link>
+        products
       </ListItemButton>
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>

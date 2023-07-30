@@ -5,8 +5,9 @@ import { useMutation } from 'react-query'
 export const baseCategoryClient = axios.create({
     baseURL: 'http://localhost:8080/api/',
     headers: {
-        "Access-Control-Allow-Origin": "http://localhost:8080/",
-        'Content-Type': 'application/json'
+        "Access-Control-Allow-Origin": "http://localhost:8080/api/category",
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic dmVyczpxd2VydGFzZGZn'
     },
 
 })
